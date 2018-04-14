@@ -124,64 +124,64 @@ public class Solution {
         }
         if (sum == 0) {
             System.out.println("Case #" + i + ": POSSIBLE");
-        } else {
-            if (sum % (h + 1) != 0 || sum % (v + 1) != 0 || sum % (v + 1) % (h + 1) != 0) {
-                System.out.println("Case #" + i + ": IMPOSSIBLE");
-            } else {
-                // Horizontal
-                int hValue = sum / (h + 1);
-                int temp = hValue;
-                int[] cutH = new int[h + 2];
-                int cutH_index = 0;
-                cutH[cutH_index++] = 0;
-                for (int a = 0; a < rows.length; a++) {
-                    temp -= rows[a];
-                    if (temp < 0) {
-                        System.out.println("Case #" + i + ": IMPOSSIBLE");
-                        return;
-                    } else if (temp == 0) {
-                        temp = hValue;
-                        cutH[cutH_index] = a + 1;
-                        cutH_index++;
-                    }
-                }
-
-                // Vertical
-                int vValue = sum / (v + 1);
-                temp = vValue;
-                int[] cutV = new int[v + 2];
-                int cutV_index = 0;
-                cutV[cutV_index++] = 0;
-                for (int a = 0; a < cols.length; a++) {
-                    temp -= cols[a];
-                    if (temp < 0) {
-                        System.out.println("Case #" + i + ": IMPOSSIBLE");
-                        return;
-                    } else if (temp == 0) {
-                        temp = vValue;
-                        cutV[cutV_index++] = a + 1;
-                    }
-                }
-
-                int expected = sum / (v + 1) / (h + 1);
-                for (int hr = 0; hr < cutH.length - 1; hr++) {
-                    for (int vr = 0; vr < cutV.length - 1; vr++) {
-                        int actual = 0;
-                        for (int ai = cutH[hr]; ai < cutH[hr + 1]; ai++) {
-                            for (int bi = cutV[vr]; bi < cutV[vr + 1]; bi++) {
-                                if (list[ai][bi] == '@')
-                                    actual++;
-                            }
-                        }
-                        if (actual != expected) {
-                            System.out.println("Case #" + i + ": IMPOSSIBLE");
-                            return;
-                        }
-                    }
-                }
-                System.out.println("Case #" + i + ": POSSIBLE");
-            }
-
+            return;
         }
+        if (sum % (h + 1) != 0 || sum % (v + 1) != 0 || sum % (v + 1) % (h + 1) != 0) {
+            System.out.println("Case #" + i + ": IMPOSSIBLE");
+            return;
+        }
+        // Horizontal
+        int hValue = sum / (h + 1);
+        int temp = hValue;
+        int[] cutH = new int[h + 2];
+        int cutH_index = 0;
+        cutH[cutH_index++] = 0;
+        for (int a = 0; a < rows.length; a++) {
+            temp -= rows[a];
+            if (temp < 0) {
+                System.out.println("Case #" + i + ": IMPOSSIBLE");
+                return;
+            } else if (temp == 0) {
+                temp = hValue;
+                cutH[cutH_index] = a + 1;
+                cutH_index++;
+            }
+        }
+
+        // Vertical
+        int vValue = sum / (v + 1);
+        temp = vValue;
+        int[] cutV = new int[v + 2];
+        int cutV_index = 0;
+        cutV[cutV_index++] = 0;
+        for (int a = 0; a < cols.length; a++) {
+            temp -= cols[a];
+            if (temp < 0) {
+                System.out.println("Case #" + i + ": IMPOSSIBLE");
+                return;
+            } else if (temp == 0) {
+                temp = vValue;
+                cutV[cutV_index++] = a + 1;
+            }
+        }
+
+        // Final check
+        int expected = sum / (v + 1) / (h + 1);
+        for (int hr = 0; hr < cutH.length - 1; hr++) {
+            for (int vr = 0; vr < cutV.length - 1; vr++) {
+                int actual = 0;
+                for (int ai = cutH[hr]; ai < cutH[hr + 1]; ai++) {
+                    for (int bi = cutV[vr]; bi < cutV[vr + 1]; bi++) {
+                        if (list[ai][bi] == '@')
+                            actual++;
+                    }
+                }
+                if (actual != expected) {
+                    System.out.println("Case #" + i + ": IMPOSSIBLE");
+                    return;
+                }
+            }
+        }
+        System.out.println("Case #" + i + ": POSSIBLE");
     }
 }
