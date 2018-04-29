@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Solution {
     public static void main(String[] args) {
         Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
-        problem2(in);
+        problem1(in);
     }
 
     public static void problem2(Scanner in) {
@@ -118,28 +118,28 @@ public class Solution {
         int in = 0;
 
         public MyDouble(int d, double people) {
-            this.d = d / people;
+            this.d = d * 100.0 / people;
             this.in = d;
         }
 
         @Override
         public int compareTo(Object o) {
-            double dThis = this.d * 100 + 0.5;
+            double dThis = this.d + 0.5;
             dThis = dThis - Math.floor(dThis);
-            double dOther = ((MyDouble) o).d * 100 + 0.5;
+            double dOther = ((MyDouble) o).d + 0.5;
             dOther = dOther - Math.floor(dOther);
             return dThis < dOther ? 1 : -1;
         }
     }
 
     public static void problem1_solve(int cas, int people, int sum, int[] languages) {
-        MyDouble[] doubles = new MyDouble[languages.length];
+
         PriorityQueue<MyDouble> queue = new PriorityQueue<>();
         for (int i = 0; i < languages.length; i++) {
-            doubles[i] = new MyDouble(languages[i], people);
-            queue.add(doubles[i]);
+            MyDouble temp = new MyDouble(languages[i], people);
+            queue.add(temp);
         }
-        double add = 1.0 / people;
+        double add = 100.0 / people;
         for (int i = 0; i < people - sum; i++) {
             MyDouble temp = queue.poll();
             if (temp != null) {
@@ -151,7 +151,7 @@ public class Solution {
         int result = 0;
         while (!queue.isEmpty()) {
             MyDouble temp = queue.poll();
-            result += Math.round(temp.d * 100);
+            result += Math.round(temp.d);
         }
         System.out.println("Case #" + cas + ": " + result);
     }
