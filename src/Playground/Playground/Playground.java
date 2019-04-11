@@ -22,7 +22,7 @@ public class Playground {
         System.out.println(hydra(4, 9, 2, generateMemo()));
         // Test4 = 0
         System.out.println(hydra(4, 9, 1, generateMemo()));
-        // Solution = 3.668331E-36
+        // Solution = 1.623444E-33
         System.out.println(hydra(4, 9, 100, generateMemo()));
     }
 
@@ -62,7 +62,7 @@ public class Playground {
 
         // Chop 1 poison, added 1 poison + chop 0 poisons, added 0 poisons
         float probSamePoison = ((float) poison / total * 2 * .5f * .5f +
-                (float) (total - poison) / total * .5f * 0.5f)
+                (float) (total - poison) / total * .5f * .5f)
                 * hydra(poison, total + 1, chops - 1, memo);
 
         // Chop 1 poison, added 2 poisons + chop 0 poisons, added 1 poison
@@ -71,7 +71,7 @@ public class Playground {
                 * hydra(poison + 1, total + 1, chops - 1, memo);
 
         // Chop 0 poisons, added 2 poisons.
-        float probTwoPoisonsMore = ((float) (1 - poison) / total * .5f * .5f)
+        float probTwoPoisonsMore = ((float) (total - poison) / total * .5f * .5f)
                 * hydra(poison + 2, total + 1, chops - 1, memo);
 
         memo[chops][poison] = probOnePoisonLess + probSamePoison + probOnePoisonMore + probTwoPoisonsMore;
